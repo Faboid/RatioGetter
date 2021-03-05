@@ -15,10 +15,11 @@ namespace RatioGetterLibrary {
             } else {
                 return false;
             }
+
         }
 
         private static bool TryCreateNumber(string[] input, out Number number) {
-            if(Int32.TryParse(input[1], out int result)) {
+            if(UInt32.TryParse(input[1], out uint result)) {
                 number = new Number(input[0], result);
                 return true;
             } else {
@@ -28,7 +29,7 @@ namespace RatioGetterLibrary {
         }
 
         private static bool TryCreateNumberWithTimeout(string[] input, out Number number) {
-            if(Int32.TryParse(input[1], out int baseNumber) && Int32.TryParse(input[2], out int timeout)) {
+            if(UInt32.TryParse(input[1], out uint baseNumber) && UInt32.TryParse(input[2], out uint timeout)) {
                 number = new Number(input[0], baseNumber, timeout);
                 return true;
             } else {

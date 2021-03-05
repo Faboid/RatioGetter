@@ -18,6 +18,8 @@ namespace RatioGetterConsole {
             Console.WriteLine(separator);
             Console.WriteLine("[name] [value] [timeout value]");
             Console.WriteLine();
+            Console.WriteLine("Only positive values. Max size: 4,294,967,295.");
+            Console.WriteLine();
             Console.WriteLine("Note: the timeout value is optional.");
             Console.WriteLine("It's used to limit the maximum size of the multiplying factor.");
             Console.WriteLine(separator);
