@@ -5,6 +5,7 @@ using System.Text;
 namespace RatioGetterLibrary {
     public static class Converter {
 
+        //todo - refactor all this class
         public static bool TryParseToNumber(string line, out Number number) {
             number = null;
             var fields = line.Split(' ');

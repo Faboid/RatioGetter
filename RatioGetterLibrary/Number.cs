@@ -15,14 +15,14 @@ namespace RatioGetterLibrary {
         public uint BaseValue { get; }
         public ulong Multiplier { get; private set; } = 1;
         public ulong Result { get => BaseValue * Multiplier; }
-        public bool isTimeout { get => (timeout != null) && timeout <= Multiplier; }
+        public bool IsTimeout { get => (timeout != null) && timeout <= Multiplier; }
         private uint? timeout { get; }
 
         public void Next(ulong addValue = 1) {
             Multiplier += addValue;
         }
         public override string ToString() {
-            if(isTimeout) {
+            if(IsTimeout) {
                 return $"[Timeout] - {Name}({BaseValue}) * {Multiplier} = {Result}";
             } else {
                 return $"{Name}({BaseValue}) * {Multiplier} = {Result}";
