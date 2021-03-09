@@ -22,7 +22,7 @@ namespace RatioGetterTests {
 
             List<string> expected = testNumbers.ConvertAll(x => x.ToString());
 
-            Assert.Equal(expected, numbers.GetRatios());
+            Assert.Equal(expected, numbers.GetPreciseRatios());
         }
 
     }

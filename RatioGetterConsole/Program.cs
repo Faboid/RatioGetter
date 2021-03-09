@@ -8,26 +8,32 @@ namespace RatioGetterConsole {
     class Program {
         static void Main(string[] args) {
 
-            SetUp(out uint approx, out uint limit);
-            List<Number> nums = GetValues();
-            var lines = SetRatioGetter(nums, approx, limit);
+            SetUp(out uint approx, out ulong limit);
 
-            WriteLines(lines);
+            do {
+                EvaluateRatioRound(approx, limit);
+            } while(AskIfContinue());
 
             Console.WriteLine("Press any key to close the console.");
             Console.ReadKey();
         }
 
-        private static List<string> SetRatioGetter(List<Number> nums, uint approx, uint limit) {
-            return (approx, limit) switch {
-                _ when (approx > 0) && (limit > 0) => nums.GetApproxRatios(approx, limit),
-                _ when approx > 0 => nums.GetApproxRatios(approx),
-                _ when limit > 0 => nums.GetRatios(limit),
-                _ => nums.GetRatios()
-            };
+        private static bool AskIfContinue() {
+            Console.WriteLine("Want to continue? Y/N");
+            return Console.ReadKey().ToString().ToUpper() != "N";
         }
 
-        private static void SetUp(out uint approx, out uint limit) {
+        private static void EvaluateRatioRound(uint approx, ulong limit) {
+            Console.WriteLine();
+            List<Number> nums = GetValues();
+            //var lines = nums.GetRatios(approx, limit);
+            Ratioer ratio = new Ratioer(nums, approx, limit);
+            var lines = ratio.GetRatios();
+
+            WriteLines(lines);
+        }
+
+        private static void SetUp(out uint approx, out ulong limit) {
             Console.WriteLine("If you want an approximated ratio(useful for non-meeting numbers), please give a number. If you don't, set 0.");
             approx = GetInputValue();
 
