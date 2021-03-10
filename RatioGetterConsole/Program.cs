@@ -20,7 +20,7 @@ namespace RatioGetterConsole {
 
         private static bool AskIfContinue() {
             Console.WriteLine("Want to continue? Y/N");
-            return Console.ReadKey().ToString().ToUpper() != "N";
+            return Console.ReadLine().ToString().ToUpper() != "N";
         }
 
         private static void EvaluateRatioRound(uint approx, ulong limit) {
@@ -59,7 +59,7 @@ namespace RatioGetterConsole {
 
             string exitLine = "DONE";
             while(GetLine(exitLine, out string line)) {
-                if(Converter.TryParseToNumber(line, out Number num)) {
+                if(Number.TryParse(line, out Number num)) {
                     output.Add(num);
                     Console.WriteLine("Added one value to the list.");
                     Console.WriteLine();

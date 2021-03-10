@@ -30,5 +30,24 @@ namespace RatioGetterLibrary {
 
         }
 
+        public static bool TryParse(string s, out Number result) {
+            result = null;
+            var fields = s.Split(' ');
+
+            if(fields.Length == 2) {
+                if(uint.TryParse(fields[1], out uint baseValue)) {
+                    result = new Number(fields[0], baseValue);
+                    return true;
+                }
+            } else if (fields.Length == 3){
+                if(uint.TryParse(fields[1], out uint baseValue) && (uint.TryParse(fields[2], out uint timeout))) {
+                    result = new Number(fields[0], baseValue, timeout);
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
     }
 }
