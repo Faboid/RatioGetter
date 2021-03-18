@@ -18,8 +18,7 @@ namespace RatioGetterLibrary {
         /// </summary>
         /// <param name="numbers">The list that will be analyzed.</param>
         /// <param name="approx">Can be set to not require precise ratios.</param>
-        /// <param name="limit">Limits the maximum attempts to get a ratio. Can be turned off by putting -1.
-        /// Warning: turning it off will result in an infinite loop if the numbers never meet.</param>
+        /// <param name="limit">Limits the maximum attempts to get a ratio. Set to 0 to keep the default limit.</param>
         public Ratioer(List<Number> numbers, uint approx = 0, ulong limit = DEFAULT_LIMIT) {
             Numbers = new List<Number>(numbers);
             this.approx = approx;
@@ -59,7 +58,7 @@ namespace RatioGetterLibrary {
                     curr.NextAll(Numbers.GetMax());
                 }
 
-                return Numbers.GetStrings().ToList();
+                return Numbers.GetStrings(Numbers.AreClose(approx)).ToList();
 
             }
         }

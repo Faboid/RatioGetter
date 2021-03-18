@@ -21,8 +21,9 @@ namespace RatioGetterLibrary {
         public void Next(ulong addValue = 1) {
             Multiplier += addValue;
         }
-        public override string ToString() {
-            if(IsTimeout) {
+
+        public string ToString(bool ignoreTimeout = false) {
+            if(IsTimeout && !ignoreTimeout) {
                 return $"[Timeout] - {Name}({BaseValue}) * {Multiplier} = {Result}";
             } else {
                 return $"{Name}({BaseValue}) * {Multiplier} = {Result}";

@@ -32,7 +32,7 @@ namespace RatioGetterLibrary {
         /// <summary>
         /// Converts a list of <see cref="Number"/> into a list of <see cref="string"/>
         /// </summary>
-        public static IEnumerable<string> GetStrings(this IEnumerable<Number> numbers) => numbers.Select(x => x.ToString());
+        public static IEnumerable<string> GetStrings(this IEnumerable<Number> numbers, bool ignoreTimeout = false) => numbers.Select(x => x.ToString(ignoreTimeout));
 
         public static IEnumerable<Number> GetSmaller(this IEnumerable<Number> numbers, ulong currentMax) => numbers.Where(x => x.Result != currentMax);
         public static ulong GetMax(this IEnumerable<Number> numbers) => numbers.Max(x => x.Result);
