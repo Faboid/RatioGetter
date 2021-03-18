@@ -20,13 +20,15 @@ namespace RatioGetterConsole {
 
         private static bool AskIfContinue() {
             Console.WriteLine("Want to continue? Y/N");
-            return Console.ReadLine().ToString().ToUpper() != "N";
+            string[] exits = new string[] { "N", "NO", "EXIT" };
+            string command = Console.ReadLine().ToString().ToUpper();
+
+            return !exits.Contains(command);
         }
 
         private static void EvaluateRatioRound(uint approx, ulong limit) {
             Console.WriteLine();
             List<Number> nums = GetValues();
-            //var lines = nums.GetRatios(approx, limit);
             Ratioer ratio = new Ratioer(nums, approx, limit);
             var lines = ratio.GetRatios();
 
@@ -34,6 +36,10 @@ namespace RatioGetterConsole {
         }
 
         private static void SetUp(out uint approx, out ulong limit) {
+            Console.WriteLine("Performing initial setup...");
+            Console.WriteLine("The next two values you assign will be immutable. To change them, reset the application.");
+            Console.WriteLine();
+
             Console.WriteLine("If you want an approximated ratio(useful for non-meeting numbers), please give a number. If you don't, set 0.");
             approx = GetInputValue();
 
