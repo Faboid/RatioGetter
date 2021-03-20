@@ -36,14 +36,5 @@ namespace RatioGetterTests {
             };
         }
 
-        public static IEnumerable<object[]> ThreeTimeoutNumbers() {
-            yield return new object[] {
-                new List<TestNumber> {
-                    //todo - add numbers
-                }
-            };
-        }
-
-
     }
 }
