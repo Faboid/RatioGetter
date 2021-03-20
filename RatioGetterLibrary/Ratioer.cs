@@ -9,21 +9,41 @@ namespace RatioGetterLibrary {
     /// </summary>
     public class Ratioer {
 
-        private const ulong DEFAULT_LIMIT = 100000000;
+        private const long DEFAULT_LIMIT = 100000000;
 
         /// <summary>
         /// Creates a new instance of <see cref="Ratioer"/>, 
         /// which can be used to obtain the ratio to equalize the <see cref="Number.Result"/> 
         /// of a list of numbers through manipulation of their <see cref="Number.Multiplier"/> value.
         /// </summary>
+        /// 
         /// <param name="numbers">The list that will be analyzed.</param>
+        /// 
         /// <param name="approx">Can be set to not require precise ratios.</param>
-        /// <param name="limit">Limits the maximum attempts to get a ratio. Set to 0 to keep the default limit.</param>
-        public Ratioer(List<Number> numbers, uint approx = 0, ulong limit = DEFAULT_LIMIT) {
+        /// 
+        /// <param name="limit">Limits the maximum attempts to get a ratio. 
+        /// <para/>Set to 0 to set to the default limit(<see cref="DEFAULT_LIMIT"/>). 
+        /// <br/>Set negative to ignore the limits(Warning: ignoring the limits has a huge chance of getting an infinite loop).
+        /// </param>
+        public Ratioer(List<Number> numbers, uint approx = 0, long limit = 0) {
             Numbers = new List<Number>(numbers);
             this.approx = approx;
 
-            if(limit > 0) {
+            SetLimit(limit);
+        }
+
+        /// <summary>
+        /// If <paramref name="limit"/> is:
+        /// 
+        /// <para/>Negative - Sets <see cref="ignoreLimit"/> to false to ignore <see cref="limit"/>.
+        /// <br/>0 - Sets <see cref="limit"/> to default value.
+        /// <br/>Positive - Sets <see cref="limit"/> to <paramref name="limit"/>
+        /// </summary>
+        /// <param name="limit"></param>
+        private void SetLimit(long limit) {
+            if(limit < 0) {
+                ignoreLimit = true;
+            } else if(limit > 0) {
                 this.limit = limit;
             } else {
                 this.limit = DEFAULT_LIMIT;
@@ -33,8 +53,9 @@ namespace RatioGetterLibrary {
         /// <summary>The list that will be analyzed.</summary>
         public List<Number> Numbers { get; private set; }
         private uint approx = 0;
-        private ulong limit;
-        private ulong currAttempts = 0;
+        private long currAttempts = 0;
+        private long limit = 100000000;
+        private bool ignoreLimit = false;
 
         /// <summary>
         /// Searches the <see cref="Number.Multiplier"/>s needed to equalize <see cref="Number.Result"/>s in the list.
@@ -47,7 +68,8 @@ namespace RatioGetterLibrary {
                 currAttempts = 0;
 
                 while(!Numbers.AreClose(approx) && !Numbers.HasTimeout()) {
-                    if(CheckLimit()) {
+
+                    if(!ignoreLimit && CheckLimit()) {
                         //returns an additional message plus the string version of the current numbers.
                         return LimitBreached();
                     }

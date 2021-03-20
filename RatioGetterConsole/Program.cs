@@ -8,7 +8,7 @@ namespace RatioGetterConsole {
     class Program {
         static void Main(string[] args) {
 
-            SetUp(out uint approx, out ulong limit);
+            SetUp(out uint approx, out long limit);
 
             do {
                 EvaluateRatioRound(approx, limit);
@@ -26,7 +26,7 @@ namespace RatioGetterConsole {
             return !exits.Contains(command);
         }
 
-        private static void EvaluateRatioRound(uint approx, ulong limit) {
+        private static void EvaluateRatioRound(uint approx, long limit) {
             Console.WriteLine();
             List<Number> nums = GetValues();
             Ratioer ratio = new Ratioer(nums, approx, limit);
@@ -35,16 +35,18 @@ namespace RatioGetterConsole {
             WriteLines(lines);
         }
 
-        private static void SetUp(out uint approx, out ulong limit) {
+        private static void SetUp(out uint approx, out long limit) {
             Console.WriteLine("Performing initial setup...");
             Console.WriteLine("The next two values you assign will be immutable. To change them, reset the application.");
             Console.WriteLine();
 
-            Console.WriteLine("If you want an approximated ratio(useful for non-meeting numbers), please give a number. If you don't, set 0.");
+            Console.WriteLine("If you want an approximated ratio(useful for never-meeting numbers), please give a positive number. Otherwise, set 0.");
             approx = GetInputValue();
+            Console.WriteLine();
 
-            Console.WriteLine("If you want to change the default max attempts, please give a number. To use the default value, set 0.");
+            Console.WriteLine("If you want to change the default max attempts, please give a number. To use the default value, set 0. To turn off the limit on attempts(warning: might result in an infinite loop), set a negative value.");
             limit = GetInputValue();
+            Console.WriteLine();
         }
 
         private static uint GetInputValue() {
@@ -54,7 +56,7 @@ namespace RatioGetterConsole {
                 if(UInt32.TryParse(line, out uint num)) {
                     return num;
                 } else {
-                    Console.WriteLine("Only numeric values are allowed.");
+                    Console.WriteLine("Only positive numeric values are allowed.");
                 }
             }
         }
